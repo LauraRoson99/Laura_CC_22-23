@@ -1,4 +1,3 @@
-# ***19-10-22***
 # Descarga de git para usarlo desde línea de órdenes
 En mi caso, tenía instalado git, Git Bash y GitHub Desktop. En caso contrario, simplemente debería haber ejecutado:
   - sudo apt-get install git
@@ -32,6 +31,3 @@ Para hacer esto, he ido a GitHub/settings/profile y he pulsado sobre el icono de
 
 # Incrementar la seguridad de nuestra cuenta en GitHub activando el segundo factor de autenticación.
 Para hacer esto, he ido a GitHub/settings/security y dentro del apartado Two-factor authentication, le he dado a activar. Siguiendo los pasos y utilizando Microsoft Authenticator, he activado el segundo factor de autenticación.
-
-
-# ***26-10-22***
