@@ -1,4 +1,0 @@
----
-lenguaje: "javascript"
-test: "../tests/routes/client.test.js"
-fichero_tareas:
