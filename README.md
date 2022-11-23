@@ -14,3 +14,4 @@ El proyecto consistirá en una página web dirigida a dos tipos de usuarios: loc
 
 - [Hito 0](https://github.com/LauraRoson99/Laura_CC_22-23/blob/main/docs/hito0.md)
 - [Hito 1](https://github.com/LauraRoson99/Laura_CC_22-23/blob/main/docs/hito1.md)
+- [Hito 2](https://github.com/LauraRoson99/Laura_CC_22-23/blob/main/docs/hito2.md)
