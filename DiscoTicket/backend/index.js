@@ -1,5 +1,5 @@
-const app = require('./app');
-require('./database');
+const app = require('./src/app');
+require('./src/database');
 
 app.listen(app.get('port'));
 

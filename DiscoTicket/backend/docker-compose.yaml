@@ -1,0 +1,41 @@
+version: "3"
+services:
+  express:
+    image: node
+    container_name: mean-backend
+    build:
+      context: ./
+      dockerfile: Dockerfile.backend
+    ports: # Checkear esto
+      - "4000:4000"
+    networks: # Checkear esto
+      - mean-stack-net
+    volumes: # Checkear esto
+      - ./src:/usr/app/src
+    depends_on:
+      - database
+    links:
+      - database
+
+  # test:
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile.test
+  #   ports:
+  #     - 4200:4200
+  #   container_name: mean-test
+  #   networks:
+  #     - mean-stack-net
+  #   volumes:
+  #     - ./src:/usr/app/src
+  #   depends_on:
+  #     - express
+
+  database:
+    image: mongo
+    ports:
+      - "27017:27017"
+
+networks:
+  mean-stack-net:
+    driver: bridge
