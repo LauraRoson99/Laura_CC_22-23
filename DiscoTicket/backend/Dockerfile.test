@@ -4,14 +4,4 @@ COPY package*.json /usr/src/app
 RUN npm install
 COPY . /usr/src/app
 EXPOSE 3000
-# 4200
-# RUN npm run test
-
-
-# RUN npm run dev
-# RUN npm run test
 ENTRYPOINT ["npm","run", "test"]
-# ENTRYPOINT [ "npm", "run", "test" ]
-# WORKDIR src
-# RUN node index.js
-# CMD ["node","index.js"]

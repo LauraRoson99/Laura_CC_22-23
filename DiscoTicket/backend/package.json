@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js && mocha ./tests/routes/client.test.js --timeout 10000",
+    "test": "mocha ./tests/routes/client.test.js --timeout 10000",
     "dev": "nodemon index.js"
   },
   "keywords": [],
