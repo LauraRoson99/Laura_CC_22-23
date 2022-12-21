@@ -6,7 +6,7 @@ jobs:
   docker-tests:
     docker:
       - image: circleci/node:10.8.0
-    working_directory: ~/DiscoTicket/backend
+    working_directory: ./DiscoTicket/backend
     resource_class: small
     steps:
       - checkout
