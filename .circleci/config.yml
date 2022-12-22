@@ -15,7 +15,7 @@ jobs:
           command: cd DiscoTicket/backend ; npm install
       - run:
           name: "Running tests in Docker container"
-          command: npm run test
+          command: cd DiscoTicket/backend ; npm run test
 
 # Invoke jobs via workflows
 workflows:
