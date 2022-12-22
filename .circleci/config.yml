@@ -5,7 +5,7 @@ version: 2.1
 jobs:
   docker-tests:
     docker:
-      - image: circleci/node:10.8.0
+      - image: node
     resource_class: small
     steps:
       - checkout
