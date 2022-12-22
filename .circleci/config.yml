@@ -6,19 +6,28 @@ jobs:
   docker-tests:
     docker:
       - image: circleci/node:10.8.0
-    working_directory: ~/Laura_CC_22-23/DiscoTicket/backend
     resource_class: small
     steps:
       - checkout
       - run:
           name: "Install Dependencies"
-          command: cd DiscoTicket/backend
+          command: cd DiscoTicket/backend ; npm run test
+  docker-server:
+    docker:
+      - image: circleci/node:10.8.0
+    resource_class: small
+    steps:
+      - checkout
       - run:
-          name: "Running tests in Docker container"
-          command: npm run test
+          name: "Start Server"
+          command: cd DiscoTicket/backend ; node index.js
+      # - run:
+      #     name: "Running tests in Docker container"
+      #     command: npm run test
 
 # Invoke jobs via workflows
 workflows:
   docker-ci-tests:
     jobs:
+      # - docker-server
       - docker-tests
