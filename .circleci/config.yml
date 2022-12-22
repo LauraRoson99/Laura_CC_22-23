@@ -11,8 +11,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "Install Dependencies"
+          command: cd DiscoTicket/backend ; npm install
+      - run:
           name: "Running tests in Docker container"
-          command: cd DiscoTicket/backend ; npm install ; npm run test
+          command: npm run test
 
 # Invoke jobs via workflows
 workflows:
