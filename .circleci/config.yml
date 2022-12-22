@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: "Install Dependencies"
-          command: cd DiscoTicket/backend ; npm install
+          command: cd DiscoTicket/backend
       - run:
           name: "Running tests in Docker container"
           command: npm run test
