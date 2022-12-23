@@ -13,8 +13,8 @@ jobs:
           name: "Give Permission"
           command: chmod 0777 ./DiscoTicket/backend/node_modules/.bin/mocha
       - run:
-          name: "Install Dependencies"
-          command: cd DiscoTicket/backend ; npm run test
+          name: "Run Tests"
+          command: cd DiscoTicket/backend ; docker run Dockerfile.test
   docker-server:
     docker:
       - image: circleci/node:10.8.0
@@ -24,9 +24,6 @@ jobs:
       - run:
           name: "Start Server"
           command: cd DiscoTicket/backend ; node index.js
-      # - run:
-      #     name: "Running tests in Docker container"
-      #     command: npm run test
 
 # Invoke jobs via workflows
 workflows:
