@@ -1,6 +1,7 @@
 const supertest = require("supertest");
-const request = supertest("host.docker.internal:3000/api/clients");
-// "http://localhost:3000/api/events"
+const request = supertest("http://localhost:3000/api/clients");
+// "http://localhost:3000/api/clients"
+// host.docker.internal:3000/api/clients
 
 // GET ALL CLIENTS
 describe('GET CLIENTS', () => {
