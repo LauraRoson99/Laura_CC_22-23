@@ -5,8 +5,8 @@ version: 2.1
 jobs:
   docker-tests:
     docker:
-      - image: docker:latest
-    resource_class: small
+      - image: node:latest
+    # resource_class: small
     steps:
       - checkout
       - run:
@@ -14,10 +14,10 @@ jobs:
           command: chmod 0777 ./DiscoTicket/backend/node_modules/.bin/mocha
       - run:
           name: "Install node"
-          command: cd DiscoTicket/backend ; npm i node -g
+          command: cd DiscoTicket/backend ; npm i -g docker
       - run:
           name: "Run Tests"
-          command: cd DiscoTicket/backend ; docker run Dockerfile.test
+          command: docker run Dockerfile.test
   docker-server:
     docker:
       - image: circleci/node:10.8.0
