@@ -1,5 +1,5 @@
 const supertest = require("supertest");
-const request = supertest("http://localhost:3000/api/clients");
+const request = supertest("host.docker.internal:3000/api/clients");
 // "http://localhost:3000/api/clients"
 // host.docker.internal:3000/api/clients
 
