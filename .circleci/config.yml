@@ -5,16 +5,16 @@ version: 2.1
 jobs:
   docker-tests:
     docker:
-      - image: ubuntu:latest
+      - image: docker:latest
     resource_class: small
     steps:
       - checkout
       - run:
           name: "Give Permission"
           command: chmod 0777 ./DiscoTicket/backend/node_modules/.bin/mocha
-      # - run:
-      #     name: "Install docker"
-      #     command: cd DiscoTicket/backend ; npm i docker
+      - run:
+          name: "Install node"
+          command: cd DiscoTicket/backend ; npm i node -g
       - run:
           name: "Run Tests"
           command: cd DiscoTicket/backend ; docker run Dockerfile.test
