@@ -7,6 +7,9 @@ jobs:
     docker:
       - image: node
     resource_class: small
+    resources:
+      - tunnel:
+          port: 3000
     steps:
       - checkout
       - run:
