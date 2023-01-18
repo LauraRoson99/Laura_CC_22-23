@@ -20,7 +20,7 @@ jobs:
   #         command: docker run Dockerfile.test
   docker-server:
     docker:
-      - image: node:latest
+      - image: docker:latest
     steps:
       - checkout
       - run:
@@ -31,7 +31,7 @@ jobs:
           command: npm install ./DiscoTicket/backend/
       - run:
           name: install docker
-          command: cd DiscoTicket/backend/ ; npm install docker
+          command: cd DiscoTicket/backend/ ; npm install -g docker
       - run:
           name: pull docker
           command: docker pull lauraroson99/laura_cc_22-23
