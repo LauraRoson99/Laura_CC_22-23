@@ -5,7 +5,7 @@ version: 2.1
 jobs:
   docker-tests:
     docker:
-      - image: node:latest
+      - image: cimg/node:latest
     # resource_class: small
     steps:
       - checkout
@@ -20,17 +20,22 @@ jobs:
           command: docker run Dockerfile.test
   docker-server:
     docker:
-      - image: circleci/node:10.8.0
-    resource_class: small
+      - image: cimg/node:latest
     steps:
-      - checkout
+      - uses: actions/checkout@v2
       - run:
-          name: "Start Server"
-          command: cd DiscoTicket/backend ; node index.js
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: pull docker
+          command: docker pull lauraroson99/laura_cc_22-23
+      - run:
+          name: testing
+          command: docker run lauraroson99/laura_cc_22-23
 
 # Invoke jobs via workflows
 workflows:
   docker-ci-tests:
     jobs:
-      # - docker-server
-      - docker-tests
+      - docker-server
+      # - docker-tests
