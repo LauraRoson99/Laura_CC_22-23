@@ -30,6 +30,9 @@ jobs:
           name: Install dependencies
           command: npm install ./DiscoTicket/backend/
       - run:
+          name: install docker
+          command: cd DiscoTicket/backend/ ; npm install docker
+      - run:
           name: pull docker
           command: docker pull lauraroson99/laura_cc_22-23
       - run:
