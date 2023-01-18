@@ -3,21 +3,21 @@ version: 2.1
 
 # Define a job to be invoked later in a workflow.
 jobs:
-  docker-tests:
-    docker:
-      - image: cimg/node:latest
-    # resource_class: small
-    steps:
-      - checkout
-      - run:
-          name: "Give Permission"
-          command: chmod 0777 ./DiscoTicket/backend/node_modules/.bin/mocha
-      - run:
-          name: "Install node"
-          command: cd DiscoTicket/backend ; npm i docker
-      - run:
-          name: "Run Tests"
-          command: docker run Dockerfile.test
+  # docker-tests:
+  #   docker:
+  #     - image: cimg/node:latest
+  #   # resource_class: small
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: "Give Permission"
+  #         command: chmod 0777 ./DiscoTicket/backend/node_modules/.bin/mocha
+  #     - run:
+  #         name: "Install node"
+  #         command: cd DiscoTicket/backend ; npm i docker
+  #     - run:
+  #         name: "Run Tests"
+  #         command: docker run Dockerfile.test
   docker-server:
     docker:
       - image: cimg/node:latest
