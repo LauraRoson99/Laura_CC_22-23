@@ -20,7 +20,7 @@ jobs:
   #         command: docker run Dockerfile.test
   docker-server:
     docker:
-      - image: docker:latest
+      - image: node:latest
     steps:
       - checkout
       - run:
