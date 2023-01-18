@@ -24,6 +24,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "Give Permission"
+          command: chmod 0777 ./DiscoTicket/backend/node_modules/.bin/mocha
+      - run:
           name: Install dependencies
           command: npm install
       - run:
