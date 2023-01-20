@@ -3,29 +3,66 @@ const reviewCtrl = {};
 const Review = require('../models/Review')
 
 reviewCtrl.getReviews = async (req, res) => {
-    const Reviews = await Review.find();
-    res.json(Reviews);
+    await review.find({}, (err, reviews) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at get reviews' });
+        } else {
+            res.status(200).send({ data: reviews });
+        }
+    });
 };
 
 reviewCtrl.getReview = async (req, res) => {
-    const Review = await Review.findById(req.params.id);
-    res.send(Review);
+    const _id = req.params.id;
+    await Review.findById({ _id }, (err, review) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at get review' });
+        } else {
+            if (!review) {
+                res.status(404).send({ message: 'Review not found' });
+            } else {
+                res.status(200).send({ data: review });
+            }
+        }
+    });
 };
 
 reviewCtrl.createReview = async (req, res) => {
     const newReview = new Review(req.body);
-    await newReview.save();
-    res.send({ message: 'Review created', data: newReview });
+    Review.findOne({ email: newreview.email }, (err, review) => {
+        if (review) {
+            res.status(404).json({ message: "review already registered" });
+        } else {
+            newReview.save((err, data) => {
+                if (err) {
+                    res.status(500).json({ message: "ERROR at create new review" });
+                } else {
+                    res.status(200).json({ message: 'Review created', data });
+                }
+            });
+        }
+    });
+
 };
 
 reviewCtrl.editReview = async (req, res) => {
-    const Review = await Review.findByIdAndUpdate(req.params.id, req.body);
-    res.json({ message: 'Review updated', data: Review });
+    await Review.findByIdAndUpdate(req.params.id, req.body, (err, review) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at update review' });
+        } else {
+            res.status(200).send({ message: 'Review updated', data: review });
+        }
+    });
 };
 
 reviewCtrl.deleteReview = async (req, res) => {
-    const Review = await Review.findByIdAndRemove(req.params.id);
-    res.json({ message: 'Review deleted', data: Review });
+    await Review.findByIdAndRemove(req.params.id, (err, data) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at delete review' });
+        } else {
+            res.status(200).send({ message: 'Review deleted', data: data });
+        }
+    });
 };
 
 

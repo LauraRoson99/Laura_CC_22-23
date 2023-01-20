@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
-
-// mongodb+srv://lauraroson:1234@clusterlaura.hzxbl.mongodb.net/?retryWrites=true&w=majority
-const url = 'mongodb://localhost/discoticket';
+require('dotenv').config();
 
 mongoose
-    .connect("mongodb+srv://lauraroson:1234@clusterlaura.hzxbl.mongodb.net/?retryWrites=true&w=majority", {
+    .connect(process.env.DB_URI, {
         useUnifiedTopology: true,
         useNewUrlParser: true
     })

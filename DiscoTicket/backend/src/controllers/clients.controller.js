@@ -3,8 +3,13 @@ const Client = require("../models/Client.js");
 const clientCtrl = {};
 
 clientCtrl.getClients = async (req, res) => {
-    const clients = await Client.find();
-    res.status(200).send({ data: clients });
+    await Client.find({}, (err, clients) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at get Clients' });
+        } else {
+            res.status(200).send({ data: clients });
+        }
+    });
 };
 
 clientCtrl.getClient = async (req, res) => {
@@ -41,13 +46,23 @@ clientCtrl.createClient = async (req, res) => {
 };
 
 clientCtrl.editClient = async (req, res) => {
-    const client = await Client.findByIdAndUpdate(req.params.id, req.body);
-    res.status(200).send({ message: 'Client updated', data: client });
+    await Client.findByIdAndUpdate(req.params.id, req.body, (err, data) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at update Client' });
+        } else {
+            res.status(200).send({ message: 'Client updated', data: data });
+        }
+    });
 };
 
 clientCtrl.deleteClient = async (req, res) => {
-    const client = await Client.findByIdAndRemove(req.params.id);
-    res.status(200).send({ message: 'Client deleted', data: client });
+    await Client.findByIdAndRemove(req.params.id, (err, data) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at delete Client' });
+        } else {
+            res.status(200).send({ message: 'Client deleted', data: data });
+        }
+    });
 };
 
 

@@ -3,29 +3,66 @@ const eventCtrl = {};
 const Event = require('../models/Event')
 
 eventCtrl.getEvents = async (req, res) => {
-    const Events = await Event.find();
-    res.json(Events);
+    await Event.find({}, (err, events) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at get Events' });
+        } else {
+            res.status(200).send({ data: events });
+        }
+    });
 };
 
 eventCtrl.getEvent = async (req, res) => {
-    const Event = await Event.findById(req.params.id);
-    res.send(Event);
+    const _id = req.params.id;
+    await Event.findById({ _id }, (err, event) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at get Event' });
+        } else {
+            if (!event) {
+                res.status(404).send({ message: 'Event not found' });
+            } else {
+                res.status(200).send({ data: event });
+            }
+        }
+    });
 };
 
 eventCtrl.createEvent = async (req, res) => {
     const newEvent = new Event(req.body);
-    await newEvent.save();
-    res.send({ message: 'Event created', data: newEvent });
+    Event.findOne({ email: newEvent.email }, (err, event) => {
+        if (event) {
+            res.status(404).json({ message: "Event already registered" });
+        } else {
+            newEvent.save((err, data) => {
+                if (err) {
+                    res.status(500).json({ message: "ERROR at create new Event" });
+                } else {
+                    res.status(200).json({ message: 'Event created', data });
+                }
+            });
+        }
+    });
+
 };
 
 eventCtrl.editEvent = async (req, res) => {
-    const Event = await Event.findByIdAndUpdate(req.params.id, req.body);
-    res.json({ message: 'Event updated', data: Event });
+    await Event.findByIdAndUpdate(req.params.id, req.body, (err, event) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at update Event' });
+        } else {
+            res.status(200).send({ message: 'Event updated', data: event });
+        }
+    });
 };
 
 eventCtrl.deleteEvent = async (req, res) => {
-    const Event = await Event.findByIdAndRemove(req.params.id);
-    res.json({ message: 'Event deleted', data: Event });
+    await Event.findByIdAndRemove(req.params.id, (err, data) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at delete Event' });
+        } else {
+            res.status(200).send({ message: 'Event deleted', data: data });
+        }
+    });
 };
 
 

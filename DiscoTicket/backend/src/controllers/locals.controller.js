@@ -3,29 +3,66 @@ const localCtrl = {};
 const Local = require('../models/Local')
 
 localCtrl.getLocals = async (req, res) => {
-    const Locals = await Local.find();
-    res.json(Locals);
+    await Local.find({}, (err, locals) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at get locals' });
+        } else {
+            res.status(200).send({ data: locals });
+        }
+    });
 };
 
 localCtrl.getLocal = async (req, res) => {
-    const Local = await Local.findById(req.params.id);
-    res.send(Local);
+    const _id = req.params.id;
+    await Local.findById({ _id }, (err, local) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at get local' });
+        } else {
+            if (!local) {
+                res.status(404).send({ message: 'Local not found' });
+            } else {
+                res.status(200).send({ data: local });
+            }
+        }
+    });
 };
 
 localCtrl.createLocal = async (req, res) => {
-    const newLocal = new Local(req.body);
-    await newLocal.save();
-    res.send({ message: 'Local created', data: newLocal });
+    const newlocal = new Local(req.body);
+    Local.findOne({ email: newlocal.email }, (err, local) => {
+        if (local) {
+            res.status(404).json({ message: "Local already registered" });
+        } else {
+            newlocal.save((err, data) => {
+                if (err) {
+                    res.status(500).json({ message: "ERROR at create new local" });
+                } else {
+                    res.status(200).json({ message: 'Local created', data });
+                }
+            });
+        }
+    });
+
 };
 
 localCtrl.editLocal = async (req, res) => {
-    const Local = await Local.findByIdAndUpdate(req.params.id, req.body);
-    res.json({ message: 'Local updated', data: Local });
+    await Local.findByIdAndUpdate(req.params.id, req.body, (err, local) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at update local' });
+        } else {
+            res.status(200).send({ message: 'Local updated', data: local });
+        }
+    });
 };
 
 localCtrl.deleteLocal = async (req, res) => {
-    const Local = await Local.findByIdAndRemove(req.params.id);
-    res.json({ message: 'Local deleted', data: Local });
+    await Local.findByIdAndRemove(req.params.id, (err, data) => {
+        if (err) {
+            res.status(500).send({ message: 'ERROR at delete local' });
+        } else {
+            res.status(200).send({ message: 'Local deleted', data: data });
+        }
+    });
 };
 
 
