@@ -3,13 +3,12 @@ const Client = require("../models/Client.js");
 const clientCtrl = {};
 
 clientCtrl.getClients = async (req, res) => {
-    await Client.find({}, (err, clients) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at get Clients' });
-        } else {
-            res.status(200).send({ data: clients });
-        }
-    });
+    try {
+        const clients = await Client.find({});
+        res.status(200).send({ data: clients });
+    } catch (error) {
+        res.status(500).send({ message: 'ERROR at get Clients' });
+    }
 };
 
 clientCtrl.getClient = async (req, res) => {
@@ -35,7 +34,7 @@ clientCtrl.createClient = async (req, res) => {
         } else {
             newClient.save((err, data) => {
                 if (err) {
-                    res.status(500).json({ message: "ERROR at create new client" });
+                    res.status(500).json({ message: req.headers });
                 } else {
                     res.status(200).json({ message: 'Client created', data });
                 }

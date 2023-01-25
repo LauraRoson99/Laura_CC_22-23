@@ -3,13 +3,12 @@ const reviewCtrl = {};
 const Review = require('../models/Review')
 
 reviewCtrl.getReviews = async (req, res) => {
-    await review.find({}, (err, reviews) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at get reviews' });
-        } else {
-            res.status(200).send({ data: reviews });
-        }
-    });
+    try {
+        const reviews = await Review.find({});
+        res.status(200).send({ data: reviews });
+    } catch (error) {
+        res.status(500).send({ message: 'ERROR at get Reviews' });
+    }
 };
 
 reviewCtrl.getReview = async (req, res) => {

@@ -3,13 +3,12 @@ const localCtrl = {};
 const Local = require('../models/Local')
 
 localCtrl.getLocals = async (req, res) => {
-    await Local.find({}, (err, locals) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at get locals' });
-        } else {
-            res.status(200).send({ data: locals });
-        }
-    });
+    try {
+        const locals = await Local.find({});
+        res.status(200).send({ data: locals });
+    } catch (error) {
+        res.status(500).send({ message: 'ERROR at get Locals' });
+    }
 };
 
 localCtrl.getLocal = async (req, res) => {

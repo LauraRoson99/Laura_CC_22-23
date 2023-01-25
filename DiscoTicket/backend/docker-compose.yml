@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  express:
+    build:
+      context: .
+      dockerfile: Dockerfile.express
+    volumes:
+      - .:/app
+    environment:
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    command: ["node", "index.js"]
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+volumes:
+  mongodb_data:

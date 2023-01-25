@@ -3,13 +3,12 @@ const eventCtrl = {};
 const Event = require('../models/Event')
 
 eventCtrl.getEvents = async (req, res) => {
-    await Event.find({}, (err, events) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at get Events' });
-        } else {
-            res.status(200).send({ data: events });
-        }
-    });
+    try {
+        const events = await Event.find({});
+        res.status(200).send({ data: events });
+    } catch (error) {
+        res.status(500).send({ message: 'ERROR at get Events' });
+    }
 };
 
 eventCtrl.getEvent = async (req, res) => {

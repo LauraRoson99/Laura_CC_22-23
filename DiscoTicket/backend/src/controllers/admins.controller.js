@@ -3,13 +3,12 @@ const adminCtrl = {};
 const Admin = require('../models/Admin')
 
 adminCtrl.getAdmins = async (req, res) => {
-    await Admin.find({}, (err, admins) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at get admins' });
-        } else {
-            res.status(200).send({ data: admins });
-        }
-    });
+    try {
+        const admins = await Admin.find({});
+        res.status(200).send({ data: admins });
+    } catch (error) {
+        res.status(500).send({ message: 'ERROR at get Admins' });
+    }
 };
 
 adminCtrl.getAdmin = async (req, res) => {
