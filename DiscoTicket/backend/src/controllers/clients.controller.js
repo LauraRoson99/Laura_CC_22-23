@@ -1,4 +1,5 @@
 const Client = require("../models/Client.js");
+const Review = require("../models/Review.js");
 
 const clientCtrl = {};
 
@@ -12,18 +13,32 @@ clientCtrl.getClients = async (req, res) => {
 };
 
 clientCtrl.getClient = async (req, res) => {
-    const _id = req.params.id;
-    await Client.findById({ _id }, (err, client) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at get Client' });
+    try {
+        const _id = req.params.id;
+        const client = await Client.findById(_id);
+        if (!client) {
+            res.status(404).send({ message: 'Client not found' });
         } else {
-            if (!client) {
-                res.status(404).send({ message: 'Client not found' });
-            } else {
-                res.status(200).send({ data: client });
-            }
+            res.status(200).send({ data: client });
         }
-    });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({ message: 'ERROR at get Client' });
+    }
+};
+
+clientCtrl.getClientReviews = async (req, res) => {
+    try {
+        const clientId = req.params.id;
+        const reviews = await Review.find({ client: clientId });
+        if (!reviews) {
+            res.status(404).send({ message: 'No reviews found for this client' });
+        } else {
+            res.status(200).send({ data: reviews });
+        }
+    } catch (error) {
+        res.status(500).send({ message: 'Error retrieving reviews for this client' });
+    }
 };
 
 clientCtrl.createClient = async (req, res) => {

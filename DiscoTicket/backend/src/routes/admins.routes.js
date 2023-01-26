@@ -1,8 +1,6 @@
 const { Router } = require('express');
 const router = Router();
 
-router.get('/admins', (req, res) => res.send('Admin routes'))
-
 const adminCtrl = require('../controllers/admins.controller.js');
 
 // /api/admins

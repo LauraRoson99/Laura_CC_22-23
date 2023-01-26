@@ -12,18 +12,17 @@ adminCtrl.getAdmins = async (req, res) => {
 };
 
 adminCtrl.getAdmin = async (req, res) => {
-    const _id = req.params.id;
-    await Admin.findById({ _id }, (err, admin) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at get Admin' });
+    try {
+        const _id = req.params.id;
+        const admin = await Admin.findById(_id);
+        if (!admin) {
+            res.status(404).send({ message: 'Admin not found' });
         } else {
-            if (!admin) {
-                res.status(404).send({ message: 'Admin not found' });
-            } else {
-                res.status(200).send({ data: admin });
-            }
+            res.status(200).send({ data: admin });
         }
-    });
+    } catch (err) {
+        res.status(500).send({ message: 'ERROR at get Admin' });
+    }
 };
 
 adminCtrl.createAdmin = async (req, res) => {

@@ -12,18 +12,17 @@ reviewCtrl.getReviews = async (req, res) => {
 };
 
 reviewCtrl.getReview = async (req, res) => {
-    const _id = req.params.id;
-    await Review.findById({ _id }, (err, review) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at get review' });
+    try {
+        const _id = req.params.id;
+        const review = await Review.findById(_id);
+        if (!review) {
+            res.status(404).send({ message: 'Review not found' });
         } else {
-            if (!review) {
-                res.status(404).send({ message: 'Review not found' });
-            } else {
-                res.status(200).send({ data: review });
-            }
+            res.status(200).send({ data: review });
         }
-    });
+    } catch (err) {
+        res.status(500).send({ message: 'ERROR at get Review' });
+    }
 };
 
 reviewCtrl.createReview = async (req, res) => {

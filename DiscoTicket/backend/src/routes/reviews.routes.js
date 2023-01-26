@@ -1,8 +1,6 @@
 const { Router } = require('express');
 const router = Router();
 
-router.get('/reviews', (req, res) => res.send('Review routes'))
-
 const reviewCtrl = require('../controllers/reviews.controller.js');
 
 // /api/reviews

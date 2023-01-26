@@ -12,18 +12,17 @@ eventCtrl.getEvents = async (req, res) => {
 };
 
 eventCtrl.getEvent = async (req, res) => {
-    const _id = req.params.id;
-    await Event.findById({ _id }, (err, event) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at get Event' });
+    try {
+        const _id = req.params.id;
+        const event = await Event.findById(_id);
+        if (!event) {
+            res.status(404).send({ message: 'Event not found' });
         } else {
-            if (!event) {
-                res.status(404).send({ message: 'Event not found' });
-            } else {
-                res.status(200).send({ data: event });
-            }
+            res.status(200).send({ data: event });
         }
-    });
+    } catch (err) {
+        res.status(500).send({ message: 'ERROR at get Event' });
+    }
 };
 
 eventCtrl.createEvent = async (req, res) => {

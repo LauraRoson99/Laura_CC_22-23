@@ -1,6 +1,8 @@
 const localCtrl = {};
 
-const Local = require('../models/Local')
+const Local = require('../models/Local');
+const Review = require("../models/Review.js");
+const Event = require("../models/Event.js");
 
 localCtrl.getLocals = async (req, res) => {
     try {
@@ -12,18 +14,45 @@ localCtrl.getLocals = async (req, res) => {
 };
 
 localCtrl.getLocal = async (req, res) => {
-    const _id = req.params.id;
-    await Local.findById({ _id }, (err, local) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at get local' });
+    try {
+        const _id = req.params.id;
+        const local = await Local.findById(_id);
+        if (!local) {
+            res.status(404).send({ message: 'Local not found' });
         } else {
-            if (!local) {
-                res.status(404).send({ message: 'Local not found' });
-            } else {
-                res.status(200).send({ data: local });
-            }
+            res.status(200).send({ data: local });
         }
-    });
+    } catch (err) {
+        res.status(500).send({ message: 'ERROR at get Local' });
+    }
+};
+
+localCtrl.getLocalReviews = async (req, res) => {
+    try {
+        const localId = req.params.id;
+        const reviews = await Review.find({ local: localId });
+        if (!reviews) {
+            res.status(404).send({ message: 'No reviews found for this local' });
+        } else {
+            res.status(200).send({ data: reviews });
+        }
+    } catch (error) {
+        res.status(500).send({ message: 'Error retrieving reviews for this local' });
+    }
+};
+
+localCtrl.getLocalEvents = async (req, res) => {
+    try {
+        const localId = req.params.id;
+        const events = await Event.find({ local: localId });
+        if (!events) {
+            res.status(404).send({ message: 'No events found for this local' });
+        } else {
+            res.status(200).send({ data: events });
+        }
+    } catch (error) {
+        res.status(500).send({ message: 'Error retrieving events for this local' });
+    }
 };
 
 localCtrl.createLocal = async (req, res) => {

@@ -1,8 +1,6 @@
 const { Router } = require('express');
 const router = Router();
 
-router.get('/events', (req, res) => res.send('Event routes'))
-
 const eventCtrl = require('../controllers/events.controller.js');
 
 // /api/events
