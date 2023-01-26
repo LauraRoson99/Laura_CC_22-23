@@ -84,13 +84,17 @@ localCtrl.editLocal = async (req, res) => {
 };
 
 localCtrl.deleteLocal = async (req, res) => {
-    await Local.findByIdAndRemove(req.params.id, (err, data) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at delete local' });
+    try {
+        const id = req.params.id;
+        const deletedLocal = await Local.findByIdAndRemove(id);
+        if (!deletedLocal) {
+            res.status(404).send({ message: 'Local not found' });
         } else {
-            res.status(200).send({ message: 'Local deleted', data: data });
+            res.status(200).send({ message: 'Local deleted successfully', data: deletedLocal });
         }
-    });
+    } catch (error) {
+        res.status(500).send({ message: 'Error deleting Local', error });
+    }
 };
 
 

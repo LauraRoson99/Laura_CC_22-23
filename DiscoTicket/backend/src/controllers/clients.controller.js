@@ -70,13 +70,17 @@ clientCtrl.editClient = async (req, res) => {
 };
 
 clientCtrl.deleteClient = async (req, res) => {
-    await Client.findByIdAndRemove(req.params.id, (err, data) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at delete Client' });
+    try {
+        const id = req.params.id;
+        const deletedClient = await Client.findByIdAndRemove(id);
+        if (!deletedClient) {
+            res.status(404).send({ message: 'Client not found' });
         } else {
-            res.status(200).send({ message: 'Client deleted', data: data });
+            res.status(200).send({ message: 'Client deleted successfully', data: deletedClient });
         }
-    });
+    } catch (error) {
+        res.status(500).send({ message: 'Error deleting client', error });
+    }
 };
 
 

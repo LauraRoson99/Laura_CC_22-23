@@ -54,14 +54,19 @@ reviewCtrl.editReview = async (req, res) => {
 };
 
 reviewCtrl.deleteReview = async (req, res) => {
-    await Review.findByIdAndRemove(req.params.id, (err, data) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at delete review' });
+    try {
+        const id = req.params.id;
+        const deletedReview = await Review.findByIdAndRemove(id);
+        if (!deletedReview) {
+            res.status(404).send({ message: 'Review not found' });
         } else {
-            res.status(200).send({ message: 'Review deleted', data: data });
+            res.status(200).send({ message: 'Review deleted successfully', data: deletedReview });
         }
-    });
+    } catch (error) {
+        res.status(500).send({ message: 'Error deleting Review', error });
+    }
 };
+
 
 
 module.exports = reviewCtrl;

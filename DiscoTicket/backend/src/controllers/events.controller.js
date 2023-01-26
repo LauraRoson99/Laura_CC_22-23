@@ -54,14 +54,19 @@ eventCtrl.editEvent = async (req, res) => {
 };
 
 eventCtrl.deleteEvent = async (req, res) => {
-    await Event.findByIdAndRemove(req.params.id, (err, data) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at delete Event' });
+    try {
+        const id = req.params.id;
+        const deletedEvent = await Event.findByIdAndRemove(id);
+        if (!deletedEvent) {
+            res.status(404).send({ message: 'Event not found' });
         } else {
-            res.status(200).send({ message: 'Event deleted', data: data });
+            res.status(200).send({ message: 'Event deleted successfully', data: deletedEvent });
         }
-    });
+    } catch (error) {
+        res.status(500).send({ message: 'Error deleting Event', error });
+    }
 };
+
 
 
 module.exports = eventCtrl;

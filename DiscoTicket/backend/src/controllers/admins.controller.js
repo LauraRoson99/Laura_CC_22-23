@@ -54,14 +54,19 @@ adminCtrl.editAdmin = async (req, res) => {
 };
 
 adminCtrl.deleteAdmin = async (req, res) => {
-    await Admin.findByIdAndRemove(req.params.id, (err, data) => {
-        if (err) {
-            res.status(500).send({ message: 'ERROR at delete Admin' });
+    try {
+        const id = req.params.id;
+        const deletedAdmin = await Admin.findByIdAndRemove(id);
+        if (!deletedAdmin) {
+            res.status(404).send({ message: 'Admin not found' });
         } else {
-            res.status(200).send({ message: 'Admin deleted', data: data });
+            res.status(200).send({ message: 'Admin deleted successfully', data: deletedAdmin });
         }
-    });
+    } catch (error) {
+        res.status(500).send({ message: 'Error deleting Admin', error });
+    }
 };
+
 
 
 module.exports = adminCtrl;
